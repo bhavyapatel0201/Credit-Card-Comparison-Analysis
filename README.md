@@ -9,6 +9,8 @@ A university group project: a Spring Boot web application that crawls bank credi
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=flat&logo=selenium&logoColor=white)
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=flat&logo=apachemaven&logoColor=white)
 
+![Dashboard](docs/dashboard.png)
+
 ## What it does
 
 - Crawls bank credit card pages with Selenium and ChromeDriver.
