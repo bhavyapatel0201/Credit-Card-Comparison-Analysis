@@ -11,6 +11,8 @@ A university group project: a Spring Boot web application that crawls bank credi
 
 > **Group project.** This repository is a copy of the team's work. The original team repository is [pruthvi4344/Credit-Card-Comparison-Analysis-](https://github.com/pruthvi4344/Credit-Card-Comparison-Analysis-).
 
+![Dashboard](docs/dashboard.png)
+
 ## What it does
 
 - Crawls bank credit card pages with Selenium and ChromeDriver.
