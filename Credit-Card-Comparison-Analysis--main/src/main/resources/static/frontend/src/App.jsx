@@ -1,0 +1,50 @@
+import { useState } from 'react';
+import './styles.css';
+import Navbar from './components/Navbar.jsx';
+import Sidebar from './components/Sidebar.jsx';
+import DashboardPage from './pages/DashboardPage.jsx';
+import AllCardsPage from './pages/AllCardsPage.jsx';
+import ComparePage from './pages/ComparePage.jsx';
+import RecommendationsPage from './pages/RecommendationsPage.jsx';
+import BankAnalyticsPage from './pages/BankAnalyticsPage.jsx';
+import CrawlerPage from './pages/CrawlerPage.jsx';
+import HtmlParserPage from './pages/HtmlParserPage.jsx';
+import SearchPage from './pages/SearchPage.jsx';
+import SpellCheckPage from './pages/SpellCheckPage.jsx';
+import WordCompletionPage from './pages/WordCompletionPage.jsx';
+import FrequencyPage from './pages/FrequencyPage.jsx';
+import SearchHistoryPage from './pages/SearchHistoryPage.jsx';
+import RankingPage from './pages/RankingPage.jsx';
+import RegexToolsPage from './pages/RegexToolsPage.jsx';
+
+const PAGES = {
+  dashboard: DashboardPage,
+  allcards: AllCardsPage,
+  compare: ComparePage,
+  recommendations: RecommendationsPage,
+  analytics: BankAnalyticsPage,
+  crawler: CrawlerPage,
+  parser: HtmlParserPage,
+  search: SearchPage,
+  spellcheck: SpellCheckPage,
+  completion: WordCompletionPage,
+  frequency: FrequencyPage,
+  history: SearchHistoryPage,
+  ranking: RankingPage,
+  regex: RegexToolsPage,
+};
+
+export default function App() {
+  const [page, setPage] = useState('dashboard');
+  const Page = PAGES[page] || DashboardPage;
+
+  return (
+    <div className="app">
+      <Navbar />
+      <Sidebar active={page} onNav={setPage} />
+      <main className="main-content">
+        <Page onNav={setPage} />
+      </main>
+    </div>
+  );
+}

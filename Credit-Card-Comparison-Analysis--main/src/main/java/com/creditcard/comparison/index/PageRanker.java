@@ -1,0 +1,56 @@
+package com.creditcard.comparison.index;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class PageRanker {
+
+    public Map<String, Integer> rankPages(Map<String, String> pages, String keyword) {
+        // Ranking is frequency-based here: more exact keyword hits means a higher score.
+        Map<String, Integer> ranking = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : pages.entrySet()) {
+            String page = entry.getKey();
+            String content = entry.getValue();
+            int count = countFrequency(content, keyword);
+            ranking.put(page, count);
+        }
+
+        return sortByValue(ranking);
+    }
+
+    public int countFrequency(String text, String keyword) {
+        if (text == null || keyword == null || keyword.isBlank()) {
+            return 0;
+        }
+
+        // Exact token counting keeps the score easy to explain in the report and UI.
+        String[] words = text.toLowerCase().split("\\W+");
+        int count = 0;
+        String normalizedKeyword = keyword.toLowerCase();
+
+        for (String word : words) {
+            if (word.equals(normalizedKeyword)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private Map<String, Integer> sortByValue(Map<String, Integer> map) {
+        // Sorting after counting is simpler than maintaining a heavier ranking structure during scanning.
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
+        list.sort((a, b) -> b.getValue() - a.getValue());
+
+        Map<String, Integer> result = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
+    }
+}
