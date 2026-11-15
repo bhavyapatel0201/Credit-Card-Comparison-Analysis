@@ -1,152 +1,128 @@
 # Credit Card Comparison & Web Search Engine
 
-## Overview
+A university group project: a Spring Boot web application that crawls bank credit card pages, counts keyword frequency, tracks search history and shows the results in a React dashboard.
 
-This project is a university group project built with:
+![Java](https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=springboot&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=flat&logo=selenium&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-C71A36?style=flat&logo=apachemaven&logoColor=white)
 
-- `Spring Boot` for the backend
-- `React + Vite` for the frontend
-- `Selenium + ChromeDriver` for web crawling
+> **Group project.** This repository is a copy of the team's work. The original team repository is [pruthvi4344/Credit-Card-Comparison-Analysis-](https://github.com/pruthvi4344/Credit-Card-Comparison-Analysis-).
 
-The system supports:
+## What it does
 
-- crawling bank credit card pages
-- keyword frequency counting
-- search history tracking
-- frontend dashboard integration
+- Crawls bank credit card pages with Selenium and ChromeDriver.
+- Counts how often a keyword appears across the crawled pages.
+- Tracks search history, which fills in after frequency and search requests.
+- Shows the results in a React dashboard backed by the Spring Boot API.
 
-## Project Structure
+## Tech stack
+
+| Part | Technology |
+|---|---|
+| Backend | Java 21, Spring Boot, Maven |
+| Frontend | React with Vite |
+| Crawling | Selenium and ChromeDriver |
+
+## Project structure
 
 ```text
-comparison/
-|-- src/main/java/com/creditcard/comparison/
-|   |-- config/
-|   |-- controller/
-|   |-- crawler/
-|   |-- index/
-|   |-- model/
-|   |-- parser/
-|   |-- recommendation/
-|   |-- spellcheck/
-|   |-- util/
-|-- src/main/resources/
-|   |-- application.properties
-|   |-- static/
-|   |   |-- frontend/
-|-- data/
-|-- pom.xml
-|-- README.md
+├── src/main/java/com/creditcard/comparison/
+│   ├── config/
+│   ├── controller/
+│   ├── crawler/
+│   ├── index/
+│   ├── model/
+│   ├── parser/
+│   ├── recommendation/
+│   ├── spellcheck/
+│   └── util/
+├── src/main/resources/
+│   ├── application.properties
+│   └── static/frontend/      # React + Vite app
+├── data/
+├── pom.xml
+└── README.md
 ```
 
 ## Requirements
 
-Install these on your PC before running the project:
+- Java JDK 21 or newer
+- Maven 3.9 or newer
+- Node.js 18 or newer
+- Git
+- Google Chrome and a matching ChromeDriver
 
-- `Java JDK 21+`
-- `Maven 3.9+`
-- `Node.js 18+`
-- `Git`
-- `Google Chrome`
-- `ChromeDriver`
-
-Check installed versions:
+Check your versions:
 
 ```powershell
 java -version
 mvn -version
 node -v
 npm -v
-git --version
 ```
 
-## ChromeDriver Setup
+## ChromeDriver setup
 
-This project currently uses this ChromeDriver path in the crawler:
+The crawler expects ChromeDriver at a fixed Windows path:
 
 ```java
-System.setProperty("webdriver.chrome.driver","C:\\chromedriver\\chromedriver.exe");
+System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
 ```
 
-On a teammate PC:
+1. Install a ChromeDriver version that matches your Chrome.
+2. Put `chromedriver.exe` in `C:\chromedriver\`.
 
-1. Install ChromeDriver that matches the installed Chrome version.
-2. Create folder `C:\chromedriver\`
-3. Place `chromedriver.exe` inside that folder.
+If yours lives elsewhere, change the path in `src/main/java/com/creditcard/comparison/crawler/WebCrawler.java`.
 
-If the path is different on another machine, update it in:
-
-- [WebCrawler.java](d:\Acc Proejct\comparison\src\main\java\com\creditcard\comparison\crawler\WebCrawler.java)
-
-## Clone the Project
+## Install
 
 ```powershell
-git clone https://github.com/pruthvi4344/Credit-Card-Comparison-Analysis-.git
-cd comparison
-```
+git clone https://github.com/bhavyapatel0201/Credit-Card-Comparison-Analysis.git
+cd Credit-Card-Comparison-Analysis
 
-## Install Dependencies
-
-Backend:
-
-```powershell
+# Backend
 mvn clean install
-```
 
-Frontend:
-
-```powershell
+# Frontend
 cd src\main\resources\static\frontend
 npm install
 cd ..\..\..\..\..
 ```
 
-## Run the Project
+## Run
 
 You need two terminals.
 
-### Terminal 1: Run backend
-
-From project root:
+**Terminal 1, backend** (from the project root):
 
 ```powershell
 mvn spring-boot:run
 ```
 
-Backend runs on:
+The API runs on `http://localhost:8080`.
 
-```text
-http://localhost:8080
-```
-
-### Terminal 2: Run frontend
+**Terminal 2, frontend:**
 
 ```powershell
 cd src\main\resources\static\frontend
 npm run dev
 ```
 
-Frontend usually runs on:
+The dashboard usually opens on `http://localhost:3000`. If Vite picks another port, use the URL it prints.
 
-```text
-http://localhost:3000
-```
+## How to use it
 
-If Vite starts on another port, open the URL shown in the terminal.
+1. Start the backend and the frontend.
+2. Open the dashboard in your browser.
+3. Run the crawler first.
+4. Then try the frequency and search history features.
 
-## How to Use
+The frequency counter depends on crawled page content, and search history is filled in after frequency and search requests.
 
-1. Start backend
-2. Start frontend
-3. Open frontend in browser
-4. First run the crawler
-5. Then test frequency/search history features
-
-Important:
-
-- `Frequency Counter` depends on crawled page content
-- `Search History` is populated after frequency/search requests
-
-## Useful API Endpoints
+## API endpoints
 
 ```text
 GET  /api/test
@@ -155,116 +131,14 @@ GET  /api/frequency?word=cashback
 GET  /api/search-frequency
 ```
 
-Example:
-
-```text
-http://localhost:8080/api/frequency?word=cashback
-```
-
-## Git Workflow
-
-Do not work directly on `main`.
-
-Before writing code, always checkout your own branch first.
-
-### First time setup
-
-```powershell
-git fetch origin
-git checkout main
-git pull origin main
-git checkout -b your-name-feature
-git push -u origin your-name-feature
-```
-
-### Every time before starting work
-
-```powershell
-git fetch origin
-git checkout your-name-feature
-git pull origin your-name-feature
-```
-
-If you need the latest `main` changes in your branch:
-
-```powershell
-git checkout main
-git pull origin main
-git checkout your-name-feature
-git merge main
-```
-
-### Commit and push your work
-
-```powershell
-git checkout your-name-feature
-git add .
-git commit -m "Add frequency count feature"
-git push origin your-name-feature
-```
-
-### Create Pull Request
-
-After pushing:
-
-1. Open GitHub
-2. Create a Pull Request from your branch to `main`
-3. Get it reviewed
-4. Merge only through Pull Request
-
-## Important Team Rules
-
-- Always checkout your branch before working on code
-- Never push directly to `main`
-- Never commit unfinished broken code if avoidable
-- Pull latest changes before starting work
-- Use Pull Requests for merging to `main`
-
-## Recommended Commands Summary
-
-```powershell
-git fetch origin
-git checkout your-name-feature
-git pull origin your-name-feature
-```
-
-```powershell
-git add .
-git commit -m "Your update message"
-git push origin your-name-feature
-```
+Example: `http://localhost:8080/api/frequency?word=cashback`
 
 ## Troubleshooting
 
-### `404` on frequency or search history
+- **404 on frequency or search history:** restart the backend (`mvn spring-boot:run`) after pulling the latest code.
+- **"Failed to fetch" in the dashboard:** check that the backend is running on `localhost:8080`, the frontend is running, and no old backend instance is still open.
+- **ChromeDriver error:** check that `chromedriver.exe` exists at the configured path and that its version matches your Chrome.
 
-Restart the backend after pulling latest code:
+## Contributors
 
-```powershell
-mvn spring-boot:run
-```
-
-### `Failed to fetch` in frontend
-
-Check:
-
-- backend is running on `localhost:8080`
-- frontend is running
-- no old backend instance is still running
-
-### ChromeDriver error
-
-Check:
-
-- `chromedriver.exe` exists at `C:\chromedriver\chromedriver.exe`
-- ChromeDriver version matches installed Chrome
-
-## Team Note
-
-Before starting any task:
-
-```powershell
-git checkout your-name-feature
-```
-
-Do not start coding on `main`.
+Built as a group project. See the [team repository](https://github.com/pruthvi4344/Credit-Card-Comparison-Analysis-) for the full contributor list.
